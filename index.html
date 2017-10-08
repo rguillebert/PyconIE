@@ -243,10 +243,51 @@
                             <li class="fragment">Through a C API (Ruby, Lua)</li>
                             <li class="fragment">Exposing code directly to C code (Rust)</li>
                         </ul>
+                        <li class="fragment">CFFI supports both!</li>
                     </ul>
                 </section>
                 <section>
-                    <h1>Thank you!</h2>
+                    <h2>Rust Example</h2>
+                    <pre>
+                    <code data-trim class="hljs">
+                        #[no_mangle]
+                        pub extern fn process() {
+                            // ...
+                        }
+                    </code>
+                    </pre>
+                </section>
+                <section>
+                    <h2>Rust Example</h2>
+                    <pre>
+                    <code data-trim class="hljs python">
+                        import cffi
+
+                        ffi = cffi.FFI()
+
+                        ffi.cdef(
+                            """
+                            void process();
+                            """
+                        )
+
+                        lib = ffi.dlopen("/path/to/rust/lib.so")
+                        lib.process()
+                    </code>
+                    </pre>
+                </section>
+                <section>
+                    <h2>Conclusion</h2>
+
+                    <ul>
+                        <li class="fragment">Call C (and more) from Python</li>
+                        <li class="fragment">Call Python from C (and more)</li>
+                        <li class="fragment">Supports all kind of use cases</li>
+                        <li class="fragment">Try it out!</li>
+                    </ul>
+                </section>
+                <section>
+                    <h1>Thank you!</h1>
                     Questions?
                 </section>
             </div>
