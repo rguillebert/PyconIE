@@ -32,7 +32,6 @@
 				<section>
 					<h2>Intro</h2>
 					<ul>
-						<li class="fragment">Senior Software Engineer @ Verve in London</li>
 						<li class="fragment">PyPy</li>
 						<li class="fragment">@rguillebert</li>
 						<li class="fragment">CFFI: A way to interact with almost any C code from Python</li>
@@ -42,12 +41,23 @@
 					<img src="standards.png"/>
 				</section>
 				<section>
-					<h2>Why do we need CFFI?</h2>
+					<h2>Problems</h2>
+					<ul>
+						<li class="fragment">Need to access C code that works well of both PyPy and CPython</li>
+						<li class="fragment">Fast way of accessing C code on PyPy</li>
+						<li class="fragment">Safer and less magic than ctypes</li>
+						<li class="fragment">Relatively simple to use</li>
+						<li class="fragment">Needs to support as many C features as possible</li>
+						<li class="fragment">Doesn't require to learn another language</li>
+					</ul>
+				</section>
+				<section>
+					<h2>CFFI</h2>
 					<ul>
 						<li class="fragment">CPython and PyPy are both first class citizen</li>
 						<li class="fragment">Faster than anything else on PyPy</li>
-						<li class="fragment">Safer and less magic than ctypes</li>
-						<li class="fragment">Relatively simple to use</li>
+						<li class="fragment">Doesn't make unsafe assumptions</li>
+						<li class="fragment">99% of the time, you just need to copy the type declarations from headers</li>
 						<li class="fragment">Works with macros and most C constructs</li>
 						<li class="fragment">Just Python</li>
 					</ul>
