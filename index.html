@@ -200,10 +200,48 @@
                 </section>
                 <section>
                     <h2>ffi.new()</h2>
+
+                    <div class="fragment">
+                        Allocate an integer with a value of 12
+                        <pre><code class="hljs python">ffi.new("int*", 12)</code></pre>
+                    </div>
+
+                    <div class="fragment">
+                        Allocate an array of integers</li>
+                        <pre><code class="hljs python">ffi.new("int[]", [1, 2, 3, 4])</code></pre>
+                    </div>
+
+                    <div class="fragment">
+                        Python owns the memory
+                    </div>
+                    
+                    <aside class="notes">
+                        Explain memory ownership
+                    </aside>
+                </section>
+                <section>
+                    <h2>ffi.gc()</h2>
+                    Call the function `func` when `ptr` is no longer available
+                    <pre><code class="hljs python">ffi.gc(ptr, func)</code></pre>
+                    Python owns the memory
+
+                    <aside class="notes">
+                        Useful when a library returns memory already allocated
+                    </aside>
+                </section>
+                <section>
+                    <h2>What if C has to own the memory?</h2>
+
+                    Use malloc as you would in C
+                </section>
+                <section>
+                    <h2>Calling other languages</h2>
+
                     <ul>
-                        <li class="fragment">ffi.new("int*", 12)</li>
+                        <li class="fragment">Most popular languages have a way of interacting with C</li>
                         <ul>
-                            <li class="fragment">Allocates an integer with a value of 12, return a pointer to it</li>
+                            <li class="fragment">Through a C API (Ruby, Lua)</li>
+                            <li class="fragment">Exposing code directly to C code (Rust)</li>
                         </ul>
                     </ul>
                 </section>
