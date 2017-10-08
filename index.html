@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>CFFI</title>
 
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
@@ -24,8 +24,26 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<h1>CFFI</h1>
+					<h2>Romain Guillebert</h2>
+					<h3>Pycon IE 2017</h3>
+				</section>
+				<section>
+					<h2>Intro</h2>
+					<ul>
+						<li class="fragment">Senior Software Engineer @ Verve in London</li>
+						<li class="fragment">PyPy</li>
+						<li class="fragment">@rguillebert</li>
+						<li class="fragment">CFFI: A way to interact with almost any C code from Python</li>
+					</ul>
+				</section>
+				<section>
+					<img src="standards.png"/>
+				</section>
+				<section>
+					<h2>Why do we need CFFI?</h2>
+				</section>
 			</div>
 		</div>
 
@@ -37,11 +55,12 @@
 			// - https://github.com/hakimel/reveal.js#configuration
 			// - https://github.com/hakimel/reveal.js#dependencies
 			Reveal.initialize({
+				history: true,
 				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				{ src: 'plugin/markdown/marked.js' },
+				{ src: 'plugin/markdown/markdown.js' },
+				{ src: 'plugin/notes/notes.js', async: true },
+				{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
 				]
 			});
 		</script>
