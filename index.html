@@ -48,9 +48,75 @@
 						<li class="fragment">Faster than anything else on PyPy</li>
 						<li class="fragment">Safer and less magic than ctypes</li>
 						<li class="fragment">Relatively simple to use</li>
-						<li class="fragment">Works with macros</li>
+						<li class="fragment">Works with macros and most C constructs</li>
 						<li class="fragment">Just Python</li>
 					</ul>
+				</section>
+				<section>
+					<h2>CFFI has 3 different modes</h2>
+					<ul>
+						<li class="fragment">ABI</li>
+						<li class="fragment">API</li>
+						<li class="fragment">Embedding</li>
+					</ul>
+				</section>
+				<section>
+					<h2>ABI Mode</h2>
+					<ul>
+						<li class="fragment">Simplest mode to use</li>
+						<li class="fragment">Does not require a C compiler</li>
+						<li class="fragment">Most similar to ctypes</li>
+					</ul>
+				</section>
+				<section>
+					<h2>ABI Mode Example</h2>
+					<pre>
+						<code data-trim class="hljs ">
+                            import cffi
+
+                            def foo():
+                                pass
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>API Mode</h2>
+					<ul>
+						<li class="fragment">Allows you to use all the features of CFFI</li>
+						<li class="fragment">Requires a C compiler when building your package</li>
+						<li class="fragment">Uses the C compiler for validation</li>
+						<li class="fragment">Works with macros</li>
+                        <li class="fragment">Structures can be partially defined</li>
+					</ul>
+				</section>
+				<section>
+					<h2>API Mode Example</h2>
+					<pre>
+						<code data-trim class="hljs ">
+                            import cffi
+
+                            def foo():
+                                pass
+						</code>
+					</pre>
+				</section>
+				<section>
+					<h2>Embedding Mode</h2>
+					<ul>
+						<li class="fragment">Call Python from C</li>
+						<li class="fragment">Offers all the features of API mode</li>
+					</ul>
+				</section>
+				<section>
+					<h2>Embedding Example</h2>
+					<pre>
+						<code data-trim class="hljs ">
+                            import cffi
+
+                            def foo():
+                                pass
+						</code>
+					</pre>
 				</section>
 			</div>
 		</div>
