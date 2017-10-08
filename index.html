@@ -1,152 +1,203 @@
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>CFFI</title>
+        <title>CFFI</title>
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/black.css">
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel="stylesheet" href="lib/css/zenburn.css">
 
-		<!-- Printing and PDF exports -->
-		<script>
-			var link = document.createElement( 'link' );
-			link.rel = 'stylesheet';
-			link.type = 'text/css';
-			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
-			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
-	</head>
-	<body>
-		<div class="reveal">
-			<div class="slides">
-				<section>
-					<h1>CFFI</h1>
-					<h2>Romain Guillebert</h2>
-					<h3>Pycon IE 2017</h3>
-				</section>
-				<section>
-					<h2>Intro</h2>
-					<ul>
-						<li class="fragment">PyPy</li>
-						<li class="fragment">@rguillebert</li>
-						<li class="fragment">CFFI: A way to interact with almost any C code from Python</li>
-					</ul>
-				</section>
-				<section>
-					<img src="standards.png"/>
-				</section>
-				<section>
-					<h2>Problems</h2>
-					<ul>
-						<li class="fragment">Need to access C code that works well of both PyPy and CPython</li>
-						<li class="fragment">Fast way of accessing C code on PyPy</li>
-						<li class="fragment">Safer and less magic than ctypes</li>
-						<li class="fragment">Relatively simple to use</li>
-						<li class="fragment">Needs to support as many C features as possible</li>
-						<li class="fragment">Doesn't require to learn another language</li>
-					</ul>
-				</section>
-				<section>
-					<h2>CFFI</h2>
-					<ul>
-						<li class="fragment">CPython and PyPy are both first class citizen</li>
-						<li class="fragment">Faster than anything else on PyPy</li>
-						<li class="fragment">Doesn't make unsafe assumptions</li>
-						<li class="fragment">99% of the time, you just need to copy the type declarations from headers</li>
-						<li class="fragment">Works with macros and most C constructs</li>
-						<li class="fragment">Just Python</li>
-					</ul>
-				</section>
-				<section>
-					<h2>CFFI has 3 different modes</h2>
-					<ul>
-						<li class="fragment">ABI</li>
-						<li class="fragment">API</li>
-						<li class="fragment">Embedding</li>
-					</ul>
-				</section>
-				<section>
-					<h2>ABI Mode</h2>
-					<ul>
-						<li class="fragment">Simplest mode to use</li>
-						<li class="fragment">Does not require a C compiler</li>
-						<li class="fragment">Most similar to ctypes</li>
-					</ul>
-				</section>
-				<section>
-					<h2>ABI Mode Example</h2>
-					<pre>
-						<code data-trim class="hljs ">
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement( 'link' );
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName( 'head' )[0].appendChild( link );
+        </script>
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section>
+                    <h1>CFFI</h1>
+                    <h2>Romain Guillebert</h2>
+                    <h3>Pycon IE 2017</h3>
+                </section>
+                <section>
+                    <h2>Intro</h2>
+                    <ul>
+                        <li class="fragment">PyPy</li>
+                        <li class="fragment">@rguillebert</li>
+                        <li class="fragment">CFFI: A way to interact with almost any C code from Python</li>
+                    </ul>
+                </section>
+                <section>
+                    <img src="standards.png"/>
+                </section>
+                <section>
+                    <h2>Problems</h2>
+                    <ul>
+                        <li class="fragment">Need to access C code that works well of both PyPy and CPython</li>
+                        <li class="fragment">Fast way of accessing C code on PyPy</li>
+                        <li class="fragment">Safer and less magic than ctypes</li>
+                        <li class="fragment">Relatively simple to use</li>
+                        <li class="fragment">Needs to support as many C features as possible</li>
+                        <li class="fragment">Doesn't require to learn another language</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>CFFI</h2>
+                    <ul>
+                        <li class="fragment">CPython and PyPy are both first class citizen</li>
+                        <li class="fragment">Faster than anything else on PyPy</li>
+                        <li class="fragment">Doesn't make unsafe assumptions</li>
+                        <li class="fragment">99% of the time, you just need to copy the type declarations from headers</li>
+                        <li class="fragment">Works with macros and most C constructs</li>
+                        <li class="fragment">Just Python</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>CFFI has 3 different modes</h2>
+                    <ul>
+                        <li class="fragment">ABI</li>
+                        <li class="fragment">API</li>
+                        <li class="fragment">Embedding</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Let's look at a header file</h2>
+                    <pre>
+                        <code data-trim class="hljs ">
+                            NAME
+                                   printf, fprintf, dprintf, sprintf, snprintf, vprintf, vfprintf, vdprintf, vsprintf, vsnprintf - formatted output conversion
+
+                            SYNOPSIS
+                                   int printf(const char *format, ...);
+                                   int fprintf(FILE *stream, const char *format, ...);
+                                   int dprintf(int fd, const char *format, ...);
+                                   int sprintf(char *str, const char *format, ...);
+                                   int snprintf(char *str, size_t size, const char *format, ...);
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h2>ABI Mode</h2>
+                    <ul>
+                        <li class="fragment">Simplest mode to use</li>
+                        <li class="fragment">Does not require a C compiler</li>
+                        <li class="fragment">Most similar to ctypes</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>ABI Mode Example</h2>
+                    <pre>
+                        <code data-trim class="hljs ">
                             import cffi
 
-                            def foo():
-                                pass
-						</code>
-					</pre>
-				</section>
-				<section>
-					<h2>API Mode</h2>
-					<ul>
-						<li class="fragment">Allows you to use all the features of CFFI</li>
-						<li class="fragment">Requires a C compiler when building your package</li>
-						<li class="fragment">Uses the C compiler for validation</li>
-						<li class="fragment">Works with macros</li>
+                            ffi = cffi.FFI()
+
+                            ffi.cdef(
+                                """
+                                int printf(const char *format, ...);
+                                """
+                            )
+
+                            lib = ffi.dlopen(None)
+                            arg = ffi.new("char[]", "World")
+                            lib.printf("Hello %s\n", arg)
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h2>API Mode</h2>
+                    <ul>
+                        <li class="fragment">Allows you to use all the features of CFFI</li>
+                        <li class="fragment">Requires a C compiler when building your package</li>
+                        <li class="fragment">Uses the C compiler for validation</li>
+                        <li class="fragment">Works with macros</li>
                         <li class="fragment">Structures can be partially defined</li>
-					</ul>
-				</section>
-				<section>
-					<h2>API Mode Example</h2>
-					<pre>
-						<code data-trim class="hljs ">
-                            import cffi
+                    </ul>
+                </section>
+                <section>
+                    <pre>
+                        <code data-trim class="hljs ">
+                           #include &lt;sys/types.h&gt;
+                           #include &lt;pwd.h&gt;
 
-                            def foo():
-                                pass
-						</code>
-					</pre>
-				</section>
-				<section>
-					<h2>Embedding Mode</h2>
-					<ul>
-						<li class="fragment">Call Python from C</li>
-						<li class="fragment">Offers all the features of API mode</li>
-					</ul>
-				</section>
-				<section>
-					<h2>Embedding Example</h2>
-					<pre>
-						<code data-trim class="hljs ">
-                            import cffi
+                           struct passwd *getpwuid(uid_t uid);
 
-                            def foo():
-                                pass
-						</code>
-					</pre>
-				</section>
-			</div>
-		</div>
+                           struct passwd {
+                               char   *pw_name;       /* username */
+                               char   *pw_passwd;     /* user password */
+                               uid_t   pw_uid;        /* user ID */
+                               gid_t   pw_gid;        /* group ID */
+                               char   *pw_gecos;      /* user information */
+                               char   *pw_dir;        /* home directory */
+                               char   *pw_shell;      /* shell program */
+                           };
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h4>API Mode Compile Script</h4>
+                    <pre>
+                        <code data-trim class="hljs ">
+                            from cffi import FFI
+                            ffibuilder = FFI()
 
-		<script src="lib/js/head.min.js"></script>
-		<script src="js/reveal.js"></script>
+                            ffibuilder.set_source("_example",
+                                """
+                                #include &lt;sys/types.h&gt;
+                                #include &lt;pwd.h&gt;
+                                """,
+                                libraries=[])
 
-		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
-			Reveal.initialize({
-				history: true,
-				dependencies: [
-				{ src: 'plugin/markdown/marked.js' },
-				{ src: 'plugin/markdown/markdown.js' },
-				{ src: 'plugin/notes/notes.js', async: true },
-				{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
-			});
-		</script>
-	</body>
+                            ffibuilder.cdef("""
+                                struct passwd {
+                                    char *pw_name;
+                                    ...;
+                                };
+                                struct passwd *getpwuid(int uid);
+                            """)
+
+                            if __name__ == "__main__":
+                                ffibuilder.compile(verbose=True)
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h2>Embedding Mode</h2>
+                    <ul>
+                        <li class="fragment">Call Python from C</li>
+                        <li class="fragment">Expose Python functions to C</li>
+                        <li class="fragment">Offers all the features of API mode</li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+
+        <script src="lib/js/head.min.js"></script>
+        <script src="js/reveal.js"></script>
+
+        <script>
+            // More info about config & dependencies:
+            // - https://github.com/hakimel/reveal.js#configuration
+            // - https://github.com/hakimel/reveal.js#dependencies
+            Reveal.initialize({
+                history: true,
+                dependencies: [
+                { src: 'plugin/markdown/marked.js' },
+                { src: 'plugin/markdown/markdown.js' },
+                { src: 'plugin/notes/notes.js', async: true },
+                { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+                ]
+            });
+        </script>
+    </body>
 </html>
