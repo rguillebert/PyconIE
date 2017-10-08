@@ -118,7 +118,7 @@
                     <h2>API Mode</h2>
                     <ul>
                         <li class="fragment">Allows you to use all the features of CFFI</li>
-                        <li class="fragment">Requires a C compiler when building your package</li>
+                        <li class="fragment">Requires a C compiler when building your CFFI package</li>
                         <li class="fragment">Uses the C compiler for validation</li>
                         <li class="fragment">Works with macros</li>
                         <li class="fragment">Structures can be partially defined</li>
@@ -168,6 +168,17 @@
 
                             if __name__ == "__main__":
                                 ffibuilder.compile(verbose=True)
+                        </code>
+                    </pre>
+                </section>
+                <section>
+                    <h4>API Mode</h4>
+                    <pre>
+                        <code data-trim class="hljs python">
+                            from _example import ffi, lib
+
+                            p = lib.getpwuid(0)
+                            assert ffi.string(p.pw_name) == b'root'
                         </code>
                     </pre>
                 </section>
